@@ -26,7 +26,7 @@ import {
   QueryScanConsistency,
   PassthroughDeserializer,
   JsonDeserializer,
-} from '../lib/analytics.js'
+} from '../lib/operationalinsights.js'
 
 function genericTests(instance: () => Cluster | Scope) {
   describe('#queryTests', function () {
@@ -327,10 +327,10 @@ function genericTests(instance: () => Cluster | Scope) {
   })
 }
 
-describe('#Enterprise Analytics query - cluster', function () {
+describe('#Operational Insights query - cluster', function () {
   genericTests(() => harness.c)
 })
 
-describe('#Enterprise Analytics query - scope', function () {
+describe('#Operational Insights query - scope', function () {
   genericTests(() => harness.s)
 })

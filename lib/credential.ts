@@ -41,7 +41,7 @@ export interface ICredential {
 }
 
 /**
- * RBAC username/password for authenticating to an Analytics cluster. For
+ * RBAC username/password for authenticating to an Operational Insights cluster. For
  * a JSON Web Token instead, see {@link JwtCredential}.
  *
  * @category Authentication
@@ -82,7 +82,7 @@ export class Credential implements ICredential {
 }
 
 /**
- * A JSON Web Token for authenticating to an Analytics cluster.
+ * A JSON Web Token for authenticating to an Operational Insights cluster.
  *
  * @category Authentication
  */
@@ -128,7 +128,7 @@ export interface CertificateCredentialOptions {
 }
 
 /**
- * A client certificate (mTLS) for authenticating to an Analytics cluster.
+ * A client certificate (mTLS) for authenticating to an Operational Insights cluster.
  * The certificate is presented during the TLS handshake; no
  * `Authorization` header is sent. Requires an `https://` endpoint.
  *
@@ -216,7 +216,7 @@ export class CertificateCredential {
 }
 
 /**
- * Credential variants accepted by an Analytics cluster.
+ * Credential variants accepted by an Operational Insights cluster.
  *
  * @category Authentication
  */

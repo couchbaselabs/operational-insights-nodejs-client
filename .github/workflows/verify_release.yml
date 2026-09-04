@@ -49,10 +49,10 @@ jobs:
           node-version: ${{ env.DEFAULT_NODE }}
       - name: Setup test directory
         run: |
-          mkdir NCBAC-test
-          cd NCBAC-test
-          curl -o analyticsQuickTest.cjs ${CI_SCRIPTS_URL}/releaseSmokeTests/analyticsQuickTest.cjs
-          curl -o analyticsQuickTest.mjs ${CI_SCRIPTS_URL}/releaseSmokeTests/analyticsQuickTest.mjs
+          mkdir NCBOI-test
+          cd NCBOI-test
+          curl -o operationalInsightsQuickTest.cjs ${CI_SCRIPTS_URL}/releaseSmokeTests/operationalInsightsQuickTest.cjs
+          curl -o operationalInsightsQuickTest.mjs ${CI_SCRIPTS_URL}/releaseSmokeTests/operationalInsightsQuickTest.mjs
           ls -alh
         env:
           CI_SCRIPTS_URL: "https://raw.githubusercontent.com/couchbaselabs/sdkbuild-jenkinsfiles/master/couchnode"
@@ -60,9 +60,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
-          name: NCBAC-test-setup
+          name: NCBOI-test-setup
           path: |
-            NCBAC-test/
+            NCBOI-test/
 
   verify-cbdinocluster:
     runs-on: ubuntu-24.04
@@ -105,9 +105,9 @@ jobs:
           CBDC_CONNSTR=$(cbdinocluster -v connstr --tls --analytics $CBDC_ID)
           echo "CBDC_ID=$CBDC_ID" >> "$GITHUB_ENV"
           echo "CBDC_CONNSTR=$CBDC_CONNSTR" >> "$GITHUB_ENV"
-          echo "NCBACCSTR=$CBDC_CONNSTR" >> "$GITHUB_ENV"
-          echo "NCBACUSER=Administrator" >> "$GITHUB_ENV"
-          echo "NCBACPASS=password" >> "$GITHUB_ENV"
+          echo "NCBOICSTR=$CBDC_CONNSTR" >> "$GITHUB_ENV"
+          echo "NCBOIUSER=Administrator" >> "$GITHUB_ENV"
+          echo "NCBOIPASS=password" >> "$GITHUB_ENV"
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -118,33 +118,33 @@ jobs:
           node -p "process.arch"
       - uses: actions/download-artifact@v4
         with:
-          name: NCBAC-test-setup
-          path: NCBAC
+          name: NCBOI-test-setup
+          path: NCBOI
       - name: Write testConfig.ini
         run: |
-          cat > NCBAC/testConfig.ini <<EOF
-          connstr = $NCBACCSTR
-          username = $NCBACUSER
-          password = $NCBACPASS
+          cat > NCBOI/testConfig.ini <<EOF
+          connstr = $NCBOICSTR
+          username = $NCBOIUSER
+          password = $NCBOIPASS
           fqdn = travel-sample.inventory.fqdn
           nonprod = false
           disable_cert_verification = true
           EOF
           echo "Written testConfig.ini:"
-          cat NCBAC/testConfig.ini
+          cat NCBOI/testConfig.ini
       - name: Run verification (install via tag)
         if: ${{ inputs.npm_tag != '' }}
         run: |
           env
           node --version
-          cd NCBAC
+          cd NCBOI
           ls -alh
           npm init -y
           npm install ini
-          npm install couchbase-analytics@$NPM_TAG -ddd
+          npm install couchbase-operational-insights@$NPM_TAG -ddd
           npm list --depth=2
-          node analyticsQuickTest.cjs
-          node analyticsQuickTest.mjs
+          node operationalInsightsQuickTest.cjs
+          node operationalInsightsQuickTest.mjs
         env:
           NPM_TAG: ${{ inputs.npm_tag }}
       - name: Run verification (install via version)
@@ -152,13 +152,13 @@ jobs:
         run: |
           env
           node --version
-          cd NCBAC
+          cd NCBOI
           ls -alh
           npm init -y
           npm install ini
-          npm install couchbase-analytics@$SDK_VERSION -ddd
+          npm install couchbase-operational-insights@$SDK_VERSION -ddd
           npm list --depth=2
-          node analyticsQuickTest.cjs
-          node analyticsQuickTest.mjs
+          node operationalInsightsQuickTest.cjs
+          node operationalInsightsQuickTest.mjs
         env:
           SDK_VERSION: ${{ inputs.version }}

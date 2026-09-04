@@ -62,9 +62,9 @@ export class Scope {
   }
 
   /**
-   * Executes a query against the Analytics scope.
+   * Executes a query against the Operational Insights scope.
    *
-   * @param statement The Analytics SQL++ statement to execute.
+   * @param statement The Operational Insights SQL++ statement to execute.
    * @param options Optional parameters for this operation.
    */
   executeQuery(
@@ -91,11 +91,11 @@ export class Scope {
   }
 
   /**
-   * Starts an asynchronous query against the Analytics cluster.
+   * Starts an asynchronous query against the Operational Insights cluster.
    * Returns a {@link QueryHandle} that can be used to fetch results, and
    * cancel the query.
    *
-   * @param statement The Analytics SQL++ statement to execute.
+   * @param statement The Operational Insights SQL++ statement to execute.
    * @param options Optional parameters for this operation.
    */
   async startQuery(

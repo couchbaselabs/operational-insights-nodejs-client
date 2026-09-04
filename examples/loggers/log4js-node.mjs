@@ -15,16 +15,16 @@
  *  limitations under the License.
  */
 
-import { createInstance, Credential } from 'couchbase-analytics'
+import { createInstance, Credential } from 'couchbase-operational-insights'
 import log4js from 'log4js'
 const { configure, getLogger } = log4js
 
 configure({
-    appenders: { analytics: { type: "file", filename: "analytics.log" } },
-    categories: { default: { appenders: ["analytics"], level: "debug" } },
+    appenders: { operationalInsights: { type: "file", filename: "operational-insights.log" } },
+    categories: { default: { appenders: ["operationalInsights"], level: "debug" } },
 })
 
-const log4jsLogger = getLogger('analytics')
+const log4jsLogger = getLogger('operationalInsights')
 
 const couchbaseLogger = {
     debug: (...args) => log4jsLogger.debug(args.map(String).join(' ')),

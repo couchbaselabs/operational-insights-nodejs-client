@@ -19,7 +19,7 @@ import { assert } from 'chai'
 import * as dns from 'node:dns'
 import * as http from 'node:http'
 import { AddressInfo } from 'node:net'
-import { Credential, createInstance } from '../lib/analytics.js'
+import { Credential, createInstance } from '../lib/operationalinsights.js'
 import { ConnectionError } from '../lib/internalerrors.js'
 
 // Per the RFC, each request MUST use a random selection from the hostname's

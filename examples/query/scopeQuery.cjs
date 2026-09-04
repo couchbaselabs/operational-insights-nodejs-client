@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 
 async function main() {
   // Update this to your cluster
@@ -24,8 +24,8 @@ async function main() {
   const password = 'password'
   // User Input ends here.
 
-  const credential = new analytics.Credential(username, password)
-  const scope = analytics
+  const credential = new operationalInsights.Credential(username, password)
+  const scope = operationalInsights
     .createInstance(clusterConnStr, credential, {
       // NOTE:  Only an example on how to use options.  Not a recommendation.
       timeoutOptions: {

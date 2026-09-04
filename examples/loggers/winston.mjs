@@ -15,12 +15,12 @@
  *  limitations under the License.
  */
 
-import { createInstance, Credential } from 'couchbase-analytics'
+import { createInstance, Credential } from 'couchbase-operational-insights'
 import { createLogger, transports } from 'winston'
 
 const winstonLogger = createLogger({
     level: 'debug',
-    transports: [new transports.Console(), new transports.File({filename: 'analytics.log'})],
+    transports: [new transports.Console(), new transports.File({filename: 'operational-insights.log'})],
 })
 
 const couchbaseLogger = {

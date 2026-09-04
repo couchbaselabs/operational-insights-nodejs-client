@@ -15,15 +15,15 @@
  *  limitations under the License.
  */
 
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 const log4js = require('log4js')
 
 log4js.configure({
-    appenders: { analytics: { type: "file", filename: "analytics.log" } },
-    categories: { default: { appenders: ["analytics"], level: "debug" } },
+    appenders: { operationalInsights: { type: "file", filename: "operational-insights.log" } },
+    categories: { default: { appenders: ["operationalInsights"], level: "debug" } },
 })
 
-const log4jsLogger = log4js.getLogger('analytics')
+const log4jsLogger = log4js.getLogger('operationalInsights')
 
 const couchbaseLogger = {
     debug: (...args) => log4jsLogger.debug(args.map(String).join(' ')),
@@ -39,8 +39,8 @@ async function main() {
     const password = 'password'
     // User Input ends here.
 
-    const credential = new analytics.Credential(username, password)
-    const cluster = analytics.createInstance(clusterConnStr, credential, {
+    const credential = new operationalInsights.Credential(username, password)
+    const cluster = operationalInsights.createInstance(clusterConnStr, credential, {
         logger: couchbaseLogger,
     })
 

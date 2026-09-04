@@ -24,14 +24,14 @@ import {
 } from './asyncqueryexecutor.js'
 import { Readable, Transform } from 'node:stream'
 import { TransformCallback } from 'stream'
-import { TimeoutError, AnalyticsError } from './errors.js'
+import { TimeoutError, OperationalInsightsError } from './errors.js'
 import { ParsingUtilities } from './utilities.js'
 import type { Cluster } from './cluster.js'
 import type { Scope } from './scope.js'
 import type { QueryNotFoundException, QueryError } from './errors.js'
 
 /**
- * Contains the results of an Analytics query.
+ * Contains the results of an Operational Insights query.
  *
  * @category Query
  */
@@ -48,7 +48,7 @@ export class QueryResult {
   }
 
   /**
-   * Returns a [Readable](https://nodejs.org/api/stream.html#readable-streams) stream of rows returned from the Analytics query.
+   * Returns a [Readable](https://nodejs.org/api/stream.html#readable-streams) stream of rows returned from the Operational Insights query.
    */
   rows(): Readable {
     return this._stream
@@ -200,7 +200,7 @@ export class QueryMetadata {
 
 /**
  * Contains information about a warning which occurred during the
- * execution of an analytics query.
+ * execution of an operational insights query.
  *
  * @category Query
  */
@@ -236,7 +236,7 @@ export class QueryWarning {
 
 /**
  * Contains various metrics that are returned by the server following
- * the execution of an analytics query.
+ * the execution of an operational insights query.
  *
  * @category Query
  */
@@ -295,7 +295,7 @@ export class QueryMetrics {
 
 /**
  * Represents the various scan consistency options that are available when
- * querying against Analytics.
+ * querying against Operational Insights.
  *
  * @category Query
  */
@@ -333,7 +333,7 @@ export interface QueryOptions {
   /**
    * Specifies the consistency requirements when executing the query.
    *
-   * @see AnalyticsScanConsistency
+   * @see QueryScanConsistency
    */
   scanConsistency?: QueryScanConsistency
 
@@ -396,7 +396,7 @@ export interface StartQueryOptions {
   /**
    * Specifies the consistency requirements when executing the query.
    *
-   * @see AnalyticsScanConsistency
+   * @see QueryScanConsistency
    */
   scanConsistency?: QueryScanConsistency
 
@@ -544,11 +544,11 @@ export class QueryStatus {
   /**
    * Returns a {@link QueryResultHandle} for fetching the results of the completed query.
    *
-   * @throws {AnalyticsError} If results are not yet ready (i.e. {@link QueryStatus.resultsReady} Returns `false`).
+   * @throws {OperationalInsightsError} If results are not yet ready (i.e. {@link QueryStatus.resultsReady} Returns `false`).
    */
   resultsHandle(): QueryResultHandle {
     if (!this._raw.handle) {
-      throw new AnalyticsError('Results are not ready')
+      throw new OperationalInsightsError('Results are not ready')
     }
     return new QueryResultHandle(
       this._executor,

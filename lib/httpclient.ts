@@ -18,7 +18,7 @@
 import { Agent as HttpAgent } from 'node:http'
 import { Agent as HttpsAgent } from 'node:https'
 import { isIP } from 'node:net'
-import { AnalyticsError, InvalidArgumentError } from './errors.js'
+import { OperationalInsightsError, InvalidArgumentError } from './errors.js'
 import { ConnectionError } from './internalerrors.js'
 import type { ClusterCredential } from './credential.js'
 import { SecurityOptions } from './cluster.js'
@@ -61,7 +61,7 @@ export class HttpClient {
       this._port = url.port ?? '443'
       this._module = https
     } else {
-      throw new AnalyticsError(
+      throw new OperationalInsightsError(
         'Unsupported protocol provided in connection string'
       )
     }

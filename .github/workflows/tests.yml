@@ -109,7 +109,7 @@ jobs:
       - name: Upload package tarball
         uses: actions/upload-artifact@v4
         with:
-          name: cba-package
+          name: cboi-package
           path: ${{ env.filename }}
 
   test-setup:
@@ -131,13 +131,13 @@ jobs:
           fetch-tags: true
       - name: Setup test environment
         run: |
-          mkdir ncbac-test
-          cp -r test ncbac-test
-          cp -r lib ncbac-test
-          cp -r scripts ncbac-test
-          cp package.json ncbac-test
-          cp package-lock.json ncbac-test
-          cp tsconfig.json ncbac-test
+          mkdir ncboi-test
+          cp -r test ncboi-test
+          cp -r lib ncboi-test
+          cp -r scripts ncboi-test
+          cp package.json ncboi-test
+          cp package-lock.json ncboi-test
+          cp tsconfig.json ncboi-test
       - name: Build testConfig.ini
         run: |
           cat > testConfig.ini <<EOF
@@ -147,14 +147,14 @@ jobs:
           EOF
           echo "Output testConfig.ini"
           cat testConfig.ini
-          mv testConfig.ini ncbac-test/test
-          echo "ncbac-test/test contents"
-          ls -alh ncbac-test/test
+          mv testConfig.ini ncboi-test/test
+          echo "ncboi-test/test contents"
+          ls -alh ncboi-test/test
       - name: Rewrite imports in test files
         run: |
-          FROM="../lib/analytics.js"
-          TO="couchbase-analytics"
-          for file in ncbac-test/test/harness.ts ncbac-test/test/query.test.ts ncbac-test/test/cluster.test.ts ncbac-test/test/asyncquery.test.ts; do
+          FROM="../lib/operationalinsights.js"
+          TO="couchbase-operational-insights"
+          for file in ncboi-test/test/harness.ts ncboi-test/test/query.test.ts ncboi-test/test/cluster.test.ts ncboi-test/test/asyncquery.test.ts; do
             echo "Rewriting import in $file"
             sed -i'' -e "s|from '$FROM'|from '$TO'|g" "$file"
           done
@@ -162,9 +162,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
-          name: ncbac-test-setup
+          name: ncboi-test-setup
           path: |
-            ncbac-test/
+            ncboi-test/
 
   test-linux:
     runs-on: ${{ matrix.os }}
@@ -184,11 +184,11 @@ jobs:
           platforms: arm64
       - uses: actions/download-artifact@v4
         with:
-          name: ncbac-test-setup
+          name: ncboi-test-setup
       - name: Download package tarball
         uses: actions/download-artifact@v4
         with:
-          name: cba-package
+          name: cboi-package
       - name: Run in docker
         uses: addnab/docker-run-action@v3
         with:
@@ -201,7 +201,7 @@ jobs:
             cd /work
             ls -alh
             npm install
-            npm install couchbase-analytics*.tgz
+            npm install couchbase-operational-insights*.tgz
             npm run test
 
   test-macos:
@@ -223,17 +223,17 @@ jobs:
           node -p "process.arch"
       - uses: actions/download-artifact@v4
         with:
-          name: ncbac-test-setup
+          name: ncboi-test-setup
       - name: Download package tarball
         uses: actions/download-artifact@v4
         with:
-          name: cba-package
+          name: cboi-package
       - name: Run tests
         timeout-minutes: 30
         run: |
           node --version
           npm install
-          npm install couchbase-analytics*.tgz
+          npm install couchbase-operational-insights*.tgz
           npm run test
           
 
@@ -257,17 +257,17 @@ jobs:
           node -p "process.arch"
       - uses: actions/download-artifact@v4
         with:
-          name: ncbac-test-setup
+          name: ncboi-test-setup
       - name: Download  package tarball
         uses: actions/download-artifact@v4
         with:
-          name: cba-package
+          name: cboi-package
       - name: Run tests
         timeout-minutes: 30
         run: |
           node --version
           npm install
-          npm install couchbase-analytics*.tgz
+          npm install couchbase-operational-insights*.tgz
           npm run test
 
   test-integration-cbdinocluster:
@@ -310,9 +310,9 @@ jobs:
         CBDC_CONNSTR=$(cbdinocluster -v connstr --tls --analytics $CBDC_ID)
         echo "CBDC_ID=$CBDC_ID" >> "$GITHUB_ENV"
         echo "CBDC_CONNSTR=$CBDC_CONNSTR" >> "$GITHUB_ENV"
-        echo "NCBACCSTR=$CBDC_CONNSTR" >> "$GITHUB_ENV"
-        echo "NCBACUSER=Administrator" >> "$GITHUB_ENV"
-        echo "NCBACPASS=password" >> "$GITHUB_ENV"
+        echo "NCBOICSTR=$CBDC_CONNSTR" >> "$GITHUB_ENV"
+        echo "NCBOIUSER=Administrator" >> "$GITHUB_ENV"
+        echo "NCBOIPASS=password" >> "$GITHUB_ENV"
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
@@ -320,20 +320,20 @@ jobs:
     - name: Download test setup
       uses: actions/download-artifact@v4
       with:
-        name: ncbac-test-setup
+        name: ncboi-test-setup
     - name: Download package tarball
       uses: actions/download-artifact@v4
       with:
-        name: cba-package
+        name: cboi-package
     - name: Run tests
       timeout-minutes: 30
       env:
-        NCBACCSTR: ${{ env.CBDC_CONNSTR || '' }}
-        NCBACUSER: 'Administrator'
-        NCBACPASS: 'password'
+        NCBOICSTR: ${{ env.CBDC_CONNSTR || '' }}
+        NCBOIUSER: 'Administrator'
+        NCBOIPASS: 'password'
       run: |
         ls -alh
         node --version
         npm install
-        npm install couchbase-analytics*.tgz
+        npm install couchbase-operational-insights*.tgz
         npm run test

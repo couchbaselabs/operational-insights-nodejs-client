@@ -29,7 +29,7 @@ const { parser } = stream_json
 import type { Parser } from 'stream-json'
 import { pipeline } from 'node:stream'
 import { runWithRetry } from './retries.js'
-import { AnalyticsError } from './errors.js'
+import { OperationalInsightsError } from './errors.js'
 import {
   ConnectionError,
   HttpStatusError,
@@ -240,7 +240,7 @@ export class QueryExecutor {
     jsonTokenizer.once('error', (err) => {
       res.destroy()
       reject(
-        new AnalyticsError(
+        new OperationalInsightsError(
           this._requestContext.attachErrorContext(
             `Got an error parsing server JSON response, details: ${err.message}`
           )
@@ -272,7 +272,7 @@ export class QueryExecutor {
     pipeline(res, jsonTokenizer, jsonTokenParser, queryStream, (err) => {
       if (err)
         return reject(
-          new AnalyticsError(
+          new OperationalInsightsError(
             this._requestContext.attachErrorContext(
               `Error occurred during query pipeline: ${err.message}`
             )
@@ -306,7 +306,7 @@ export class QueryExecutor {
         parsed = JSON.parse(raw)
       } catch (_e) {
         return reject(
-          new AnalyticsError(
+          new OperationalInsightsError(
             this._requestContext.attachErrorContext(
               `Server returned HTTP ${res.statusCode} with a non-JSON body`
             )
@@ -319,7 +319,7 @@ export class QueryExecutor {
       }
 
       return reject(
-        new AnalyticsError(
+        new OperationalInsightsError(
           this._requestContext.attachErrorContext(
             `Server returned HTTP ${res.statusCode} with no errors in body`
           )

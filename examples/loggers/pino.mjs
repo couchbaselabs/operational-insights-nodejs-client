@@ -15,12 +15,12 @@
  *  limitations under the License.
  */
 
-import { createInstance, Credential } from 'couchbase-analytics'
+import { createInstance, Credential } from 'couchbase-operational-insights'
 import { transport, pino } from 'pino'
 
 const fileTransport = transport({
     target: 'pino/file',
-    options: { destination: 'analytics.log'}
+    options: { destination: 'operational-insights.log'}
 })
 
 const pinoLogger = pino(

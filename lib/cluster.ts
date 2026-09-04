@@ -212,7 +212,7 @@ export class Cluster {
 
     if (!options.logger) {
       const envLogLevel = (
-        process.env.NCBACLOGLEVEL || ''
+        process.env.NCBOILOGLEVEL || ''
       ).toLowerCase() as LogLevel
 
       options.logger = LOG_LEVELS.includes(envLogLevel)
@@ -309,9 +309,9 @@ export class Cluster {
   }
 
   /**
-   * Executes a query against the Analytics cluster.
+   * Executes a query against the Operational Insights cluster.
    *
-   * @param statement The Analytics SQL++ statement to execute.
+   * @param statement The Operational Insights SQL++ statement to execute.
    * @param options Optional parameters for this operation.
    */
   executeQuery(
@@ -336,11 +336,11 @@ export class Cluster {
   }
 
   /**
-   * Starts an asynchronous query against the Analytics cluster.
+   * Starts an asynchronous query against the Operational Insights cluster.
    * Returns a {@link QueryHandle} that can be used to fetch results, and
    * cancel the query.
    *
-   * @param statement The Analytics SQL++ statement to execute.
+   * @param statement The Operational Insights SQL++ statement to execute.
    * @param options Optional parameters for this operation.
    */
   async startQuery(

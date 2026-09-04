@@ -19,7 +19,7 @@ import { BuiltQueryRequest, QueryExecutor } from './queryexecutor.js'
 import { QueryOptions, QueryResult, StartQueryOptions } from './querytypes.js'
 import * as http from 'node:http'
 import { runWithRetry } from './retries.js'
-import { AnalyticsError } from './errors.js'
+import { OperationalInsightsError } from './errors.js'
 import { ConnectionError, InternalConnectionTimeout } from './internalerrors.js'
 import { ErrorHandler } from './errorhandler.js'
 import { CouchbaseLogger } from './logger.js'
@@ -486,7 +486,7 @@ export class AsyncQueryExecutor extends QueryExecutor {
         parsed = JSON.parse(raw)
       } catch (e) {
         return reject(
-          new AnalyticsError(
+          new OperationalInsightsError(
             this._requestContext.attachErrorContext(
               `Failed to parse JSON response: ${(e as Error).message}`
             )
@@ -504,7 +504,7 @@ export class AsyncQueryExecutor extends QueryExecutor {
         )
         if (missingFields.length > 0) {
           return reject(
-            new AnalyticsError(
+            new OperationalInsightsError(
               this._requestContext.attachErrorContext(
                 `Server response is missing required fields: ${missingFields.join(', ')}`
               )

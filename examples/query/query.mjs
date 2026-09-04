@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-import { Certificates, Credential, createInstance } from 'couchbase-analytics'
+import { Certificates, Credential, createInstance } from 'couchbase-operational-insights'
 
 async function main() {
   // Update this to your cluster

@@ -1,25 +1,25 @@
-# Couchbase Node.js Analytics Client
-Node.js client for [Couchbase](https://couchbase.com) Analytics
+# Couchbase Node.js Operational Insights Client
+Node.js client for [Couchbase](https://couchbase.com) Operational Insights
 
 # Installing the SDK<a id="installing-the-sdk"></a>
 
 To install the latest release using npm, run:
 ```console
-npm install couchbase-analytics
+npm install couchbase-operational-insights
 ```
 To install the development version directly from github, run:
 ```console
-npm install https://github.com/couchbase/analytics-nodejs-client
+npm install https://github.com/couchbase/operational-insights-nodejs-client
 ```
 
 # Using the SDK<a id="using-the-sdk"></a>
 
-Some more examples are provided in the [examples directory](https://github.com/couchbase/analytics-nodejs-client/tree/main/examples).
+Some more examples are provided in the [examples directory](https://github.com/couchbase/operational-insights-nodejs-client/tree/main/examples).
 
 ## CommonJS
 **Connecting and executing a query**
 ```javascript
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 
 async function main() {
   // Update this to your cluster
@@ -31,8 +31,8 @@ async function main() {
   const password = 'password'
   // User Input ends here.
 
-  const credential = new analytics.Credential(username, password)
-  const cluster = analytics.createInstance(clusterEndpoint, credential)
+  const credential = new operationalInsights.Credential(username, password)
+  const cluster = operationalInsights.createInstance(clusterEndpoint, credential)
 
   // Execute a streaming query with positional arguments.
   let qs = 'SELECT * FROM `travel-sample`.inventory.airline LIMIT 10;'
@@ -78,7 +78,7 @@ main()
 ## ES Modules
 **Connecting and executing a query**
 ```javascript
-import { Certificates, Credential, createInstance } from "couchbase-analytics"
+import { Certificates, Credential, createInstance } from "couchbase-operational-insights"
 
 async function main() {
   // Update this to your cluster

@@ -15,12 +15,12 @@
  *  limitations under the License.
  */
 
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 const winston = require('winston')
 
 const winstonLogger = winston.createLogger({
   level: 'debug',
-  transports: [new winston.transports.Console(), new winston.transports.File({filename: 'analytics.log'})],
+  transports: [new winston.transports.Console(), new winston.transports.File({filename: 'operational-insights.log'})],
 })
 
 const couchbaseLogger = {
@@ -37,8 +37,8 @@ async function main() {
   const password = 'password'
   // User Input ends here.
 
-  const credential = new analytics.Credential(username, password)
-  const cluster = analytics.createInstance(clusterConnStr, credential, {
+  const credential = new operationalInsights.Credential(username, password)
+  const cluster = operationalInsights.createInstance(clusterConnStr, credential, {
     logger: couchbaseLogger,
   })
 

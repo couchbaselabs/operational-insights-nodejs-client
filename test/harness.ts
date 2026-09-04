@@ -29,7 +29,7 @@ import {
   Credential,
   createInstance,
   Certificates,
-} from '../lib/analytics.js'
+} from '../lib/operationalinsights.js'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -119,13 +119,13 @@ try {
 
 if (configIni && configIni.connstr !== undefined) {
   TEST_CONFIG.connstr = configIni.connstr
-} else if (process.env.NCBACCSTR !== undefined) {
-  TEST_CONFIG.connstr = process.env.NCBACCSTR
+} else if (process.env.NCBOICSTR !== undefined) {
+  TEST_CONFIG.connstr = process.env.NCBOICSTR
 }
 
-if ((configIni && configIni.version) || process.env.NCBACCVER !== undefined) {
+if ((configIni && configIni.version) || process.env.NCBOICVER !== undefined) {
   assert(!!TEST_CONFIG.connstr, 'must not specify a version without a connstr')
-  const ver = configIni?.version || process.env.NCBACCVER || ''
+  const ver = configIni?.version || process.env.NCBOICVER || ''
   const major = semver.major(ver)
   const minor = semver.minor(ver)
   const patch = semver.patch(ver)
@@ -135,8 +135,8 @@ if ((configIni && configIni.version) || process.env.NCBACCVER !== undefined) {
 let fqdnTokens: string[] = []
 if (configIni && configIni.fqdn !== undefined) {
   fqdnTokens = configIni.fqdn.split('.')
-} else if (process.env.NCBACFQDN !== undefined) {
-  fqdnTokens = process.env.NCBACFQDN!.split('.')
+} else if (process.env.NCBOIFQDN !== undefined) {
+  fqdnTokens = process.env.NCBOIFQDN!.split('.')
 }
 
 if (fqdnTokens.length > 0) {
@@ -150,33 +150,33 @@ if (fqdnTokens.length > 0) {
 
 if (configIni && configIni.username !== undefined) {
   TEST_CONFIG.user = configIni.username
-} else if (process.env.NCBACUSER !== undefined) {
-  TEST_CONFIG.user = process.env.NCBACUSER
+} else if (process.env.NCBOIUSER !== undefined) {
+  TEST_CONFIG.user = process.env.NCBOIUSER
 }
 
 if (configIni && configIni.password !== undefined) {
   TEST_CONFIG.pass = configIni.password
-} else if (process.env.NCBACPASS !== undefined) {
-  TEST_CONFIG.pass = process.env.NCBACPASS
+} else if (process.env.NCBOIPASS !== undefined) {
+  TEST_CONFIG.pass = process.env.NCBOIPASS
 }
 
 if (configIni && configIni.nonprod !== undefined) {
   TEST_CONFIG.nonprod = configIni.nonprod
-} else if (process.env.NCBACNONPROD !== undefined) {
-  TEST_CONFIG.nonprod = process.env.NCBACNONPROD === 'true'
+} else if (process.env.NCBOINONPROD !== undefined) {
+  TEST_CONFIG.nonprod = process.env.NCBOINONPROD === 'true'
 }
 
 if (configIni && configIni.disable_cert_verification !== undefined) {
   TEST_CONFIG.disableCertVerification = configIni.disable_cert_verification
-} else if (process.env.NCBACDISABLECERTVERIFICATION !== undefined) {
+} else if (process.env.NCBOIDISABLECERTVERIFICATION !== undefined) {
   TEST_CONFIG.disableCertVerification =
-    process.env.NCBACDISABLECERTVERIFICATION === 'true'
+    process.env.NCBOIDISABLECERTVERIFICATION === 'true'
 }
 
-if ((configIni && configIni.features) || process.env.NCBACFEAT !== undefined) {
+if ((configIni && configIni.features) || process.env.NCBOIFEAT !== undefined) {
   const featureStrs = (
     configIni?.features ||
-    process.env.NCBACFEAT ||
+    process.env.NCBOIFEAT ||
     ''
   ).split(',')
   featureStrs.forEach((featureStr: string) => {

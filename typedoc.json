@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["./lib/analytics.ts"],
+  "entryPoints": ["./lib/operationalinsights.ts"],
   "out": "docs",
   "excludePrivate": true,
   "excludeInternal": true,

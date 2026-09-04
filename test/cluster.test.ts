@@ -21,7 +21,7 @@ import {
   createInstance,
   ClusterOptions,
   PassthroughDeserializer,
-} from '../lib/analytics.js'
+} from '../lib/operationalinsights.js'
 
 describe('#Cluster', function () {
   it('should correctly set timeouts', function () {

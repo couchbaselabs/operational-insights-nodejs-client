@@ -21,7 +21,7 @@
  *
  * @category Error Handling
  */
-export class AnalyticsError extends Error {
+export class OperationalInsightsError extends Error {
   cause: Error
 
   constructor(message: string, cause?: Error) {
@@ -35,29 +35,29 @@ export class AnalyticsError extends Error {
  *
  * @category Error Handling
  */
-export class InvalidCredentialError extends AnalyticsError {
+export class InvalidCredentialError extends OperationalInsightsError {
   constructor(message: string) {
     super(message)
   }
 }
 
 /**
- * Indicates that an interaction with the Analytics cluster does not complete before its timeout expires.
+ * Indicates that an interaction with the Operational Insights cluster does not complete before its timeout expires.
  *
  * @category Error Handling
  */
-export class TimeoutError extends AnalyticsError {
+export class TimeoutError extends OperationalInsightsError {
   constructor(message: string) {
     super(message)
   }
 }
 
 /**
- * Indicates that the Analytics cluster returned an error message in response to a query request.
+ * Indicates that the Operational Insights cluster returned an error message in response to a query request.
  *
  * @category Error Handling
  */
-export class QueryError extends AnalyticsError {
+export class QueryError extends OperationalInsightsError {
   /**
    * A human-readable error message sent by the server, without the additional context contained in {@link Error.message}.
    */
@@ -65,7 +65,7 @@ export class QueryError extends AnalyticsError {
 
   // TODO: Add docs reference link with error codes
   /**
-   * The Analytics error code sent by the server.
+   * The Operational Insights error code sent by the server.
    */
   code: number
 
@@ -88,7 +88,7 @@ export class QueryError extends AnalyticsError {
  *
  * @category Error Handling
  */
-export class QueryNotFoundException extends AnalyticsError {
+export class QueryNotFoundException extends OperationalInsightsError {
   constructor(message: string) {
     super(message)
   }

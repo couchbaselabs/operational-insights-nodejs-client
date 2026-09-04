@@ -2,14 +2,14 @@
   "bugs": {
     "url": "https://jira.issues.couchbase.com/projects/JSCO/issues"
   },
-  "description": "The official Couchbase Node.js Analytics Client Library.",
+  "description": "The official Couchbase Node.js Operational Insights Client Library.",
   "engines": {
     "node": ">=16"
   },
   "homepage": "https://www.couchbase.com/developers/sdks",
   "keywords": [
     "couchbase",
-    "analytics",
+    "operational-insights",
     "libcouchbase",
     "memcached",
     "nosql",
@@ -17,21 +17,21 @@
     "document"
   ],
   "type": "module",
-  "main": "./dist/analytics.cjs",
-  "module": "./dist/analytics.js",
-  "types": "./dist/analytics.d.ts",
+  "main": "./dist/operationalinsights.cjs",
+  "module": "./dist/operationalinsights.js",
+  "types": "./dist/operationalinsights.d.ts",
   "exports": {
     "import": {
-      "types": "./dist/analytics.d.ts",
-      "import": "./dist/analytics.js"
+      "types": "./dist/operationalinsights.d.ts",
+      "import": "./dist/operationalinsights.js"
     },
     "require": {
-      "types": "./dist/analytics.d.cts",
-      "require": "./dist/analytics.cjs"
+      "types": "./dist/operationalinsights.d.cts",
+      "require": "./dist/operationalinsights.cjs"
     }
   },
   "license": "Apache-2.0",
-  "name": "couchbase-analytics",
+  "name": "couchbase-operational-insights",
   "dependencies": {
     "stream-json": "^1.9.1"
   },
@@ -75,9 +75,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/couchbase/analytics-nodejs-client"
+    "url": "https://github.com/couchbase/operational-insights-nodejs-client"
   },
-  "version": "1.1.0-dev",
+  "version": "1.0.0",
   "config": {
     "native": false
   },
@@ -85,7 +85,7 @@
     "prepare": "npm run build && node ./scripts/copyCertificates.js",
     "prepack": "node ./scripts/copyCertificates.js",
     "build-docs": "typedoc",
-    "build": "tsup lib/analytics.ts --format cjs,esm --dts --clean --sourcemap",
+    "build": "tsup lib/operationalinsights.ts --format cjs,esm --dts --clean --sourcemap",
     "check-types": "npx --yes @arethetypeswrong/cli --pack .",
     "test": "ts-mocha test/*.test.ts",
     "cover": "nyc ts-mocha test/*.test.*",

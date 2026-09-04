@@ -15,12 +15,12 @@
  *  limitations under the License.
  */
 
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 const pino = require('pino')
 
 const fileTransport = pino.transport({
     target: 'pino/file',
-    options: { destination: 'analytics.log'}
+    options: { destination: 'operational-insights.log'}
 })
 
 const pinoLogger = pino(
@@ -45,8 +45,8 @@ async function main() {
     const password = 'password'
     // User Input ends here.
 
-    const credential = new analytics.Credential(username, password)
-    const cluster = analytics.createInstance(clusterConnStr, credential, {
+    const credential = new operationalInsights.Credential(username, password)
+    const cluster = operationalInsights.createInstance(clusterConnStr, credential, {
         logger: couchbaseLogger,
     })
 

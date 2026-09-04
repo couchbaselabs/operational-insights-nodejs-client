@@ -24,7 +24,7 @@ import {
   JwtCredential,
   createInstance,
   type ClusterCredential,
-} from '../lib/analytics.js'
+} from '../lib/operationalinsights.js'
 import { InvalidArgumentError } from '../lib/errors.js'
 
 const SAMPLE_JWT = 'header.payload.signature'

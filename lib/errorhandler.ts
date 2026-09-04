@@ -17,7 +17,7 @@
 
 import { RequestContext } from './requestcontext.js'
 import {
-  AnalyticsError,
+  OperationalInsightsError,
   InvalidCredentialError,
   QueryError,
   QueryNotFoundException,
@@ -55,7 +55,7 @@ export class ErrorHandler {
         )
       } else if (errs.statusCode === 503) {
         return RequestBehaviour.retry(
-          new AnalyticsError(
+          new OperationalInsightsError(
             context.attachErrorContext(
               'The server returned a 503 Service Unavailable error. This is likely a temporary issue.'
             )
@@ -64,7 +64,7 @@ export class ErrorHandler {
       }
 
       return RequestBehaviour.fail(
-        new AnalyticsError(
+        new OperationalInsightsError(
           context.attachErrorContext(
             `Unhandled HTTP status error occurred: ${errs}`
           )
@@ -83,7 +83,7 @@ export class ErrorHandler {
     } else if (errs instanceof ConnectionError) {
       if (this._isRetriableConnectionError(errs)) {
         return RequestBehaviour.retry(
-          new AnalyticsError(
+          new OperationalInsightsError(
             context.attachErrorContext(
               `Got a retriable connection error from the HTTP library, details: ${errs.cause}`
             )
@@ -92,16 +92,16 @@ export class ErrorHandler {
       }
 
       return RequestBehaviour.fail(
-        new AnalyticsError(
+        new OperationalInsightsError(
           context.attachErrorContext(
             `Got an unretriable error from the HTTP library, details: ${errs.cause.message}`
           )
         )
       )
-    } else if (errs instanceof AnalyticsError) {
+    } else if (errs instanceof OperationalInsightsError) {
       return RequestBehaviour.fail(errs)
     } else if (errs.name && errs.name === 'AbortError') {
-      // We consider AbortError a platform error so we don't wrap it in AnalyticsError
+      // We consider AbortError a platform error so we don't wrap it in OperationalInsightsError
       return RequestBehaviour.fail(errs)
     } else if (Array.isArray(errs)) {
       // Server error array from query JSON response
@@ -109,7 +109,7 @@ export class ErrorHandler {
     }
 
     return RequestBehaviour.fail(
-      new AnalyticsError(
+      new OperationalInsightsError(
         context.attachErrorContext(`Unknown Error received: ${String(errs)}`)
       )
     )
@@ -153,7 +153,7 @@ export class ErrorHandler {
 
     if (!selectedError) {
       return RequestBehaviour.fail(
-        new AnalyticsError(
+        new OperationalInsightsError(
           context.attachErrorContext('Server returned an empty error array')
         )
       )

@@ -127,7 +127,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1
-          name: ncbac-api-docs
+          name: ncboi-api-docs
           path: docs/
 
   publish-npm:
@@ -156,11 +156,11 @@ jobs:
           node -p "process.arch"
       - name: Set version
         env:
-          NCBAC_VERSION: ${{ inputs.version }}
+          NCBOI_VERSION: ${{ inputs.version }}
         run: |
-          echo "NCBAC_VERSION=$NCBAC_VERSION"
-          node -e "var x = JSON.parse(fs.readFileSync('package.json')); x.version = '$NCBAC_VERSION'; fs.writeFileSync('package.json', JSON.stringify(x));"
-          node -e "var x = JSON.parse(fs.readFileSync('package-lock.json')); x.version = '$NCBAC_VERSION'; fs.writeFileSync('package-lock.json', JSON.stringify(x));"
+          echo "NCBOI_VERSION=$NCBOI_VERSION"
+          node -e "var x = JSON.parse(fs.readFileSync('package.json')); x.version = '$NCBOI_VERSION'; fs.writeFileSync('package.json', JSON.stringify(x));"
+          node -e "var x = JSON.parse(fs.readFileSync('package-lock.json')); x.version = '$NCBOI_VERSION'; fs.writeFileSync('package-lock.json', JSON.stringify(x));"
       - name: Install dependencies
         run: npm ci --ignore-scripts
       - name: Publish to npm
@@ -208,7 +208,7 @@ jobs:
       - name: Download API docs artifact
         uses: actions/download-artifact@v4
         with:
-          name: ncbac-api-docs
+          name: ncboi-api-docs
           path: docs
       - name: Setup AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -218,6 +218,6 @@ jobs:
       - name: Upload to S3
         run: |
           ls -alh ./docs
-          aws s3 cp ./docs s3://docs.couchbase.com/sdk-api/analytics-nodejs-client-$SDK_VERSION/ --recursive --acl public-read
+          aws s3 cp ./docs s3://docs.couchbase.com/sdk-api/operational-insights-nodejs-client-$SDK_VERSION/ --recursive --acl public-read
         env:
           SDK_VERSION: ${{ inputs.version }}

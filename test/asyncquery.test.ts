@@ -25,8 +25,8 @@ import {
   QueryStatus,
   InvalidArgumentError,
   PassthroughDeserializer,
-  AnalyticsError,
-} from '../lib/analytics.js'
+  OperationalInsightsError,
+} from '../lib/operationalinsights.js'
 
 const POLL_INTERVAL_MS = 1000
 const MAX_POLL_ATTEMPTS = 120
@@ -84,13 +84,13 @@ function genericAsyncTests(instance: () => Cluster | Scope) {
       await handle.cancel()
     })
 
-    it('should throw AnalyticsError from resultsHandle when results are not ready', async function () {
+    it('should throw OperationalInsightsError from resultsHandle when results are not ready', async function () {
       const qs = `FROM RANGE(1, 1000000) AS i SELECT *`
       const handle = await instance()!.startQuery(qs)
 
       const status = await handle.fetchStatus()
       if (!status.resultsReady()) {
-        assert.throws(() => status.resultsHandle(), AnalyticsError)
+        assert.throws(() => status.resultsHandle(), OperationalInsightsError)
       }
 
       await handle.cancel()
@@ -384,10 +384,10 @@ function genericAsyncTests(instance: () => Cluster | Scope) {
   })
 }
 
-describe('#Enterprise Analytics async query - cluster', function () {
+describe('#Operational Insights async query - cluster', function () {
   genericAsyncTests(() => harness.c)
 })
 
-describe('#Enterprise Analytics async query - scope', function () {
+describe('#Operational Insights async query - scope', function () {
   genericAsyncTests(() => harness.s)
 })
