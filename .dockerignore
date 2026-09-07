@@ -1,0 +1,7 @@
+.git/
+node_modules/
+dist/
+coverage/
+performer/node_modules/
+performer/src/build/
+performer/src/proto/
